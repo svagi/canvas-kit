@@ -17,7 +17,27 @@
   } catch (e) {
     // eslint-disable-next-line no-console
     console.warn('unable to connect to top frame for connecting dev tools');
-  }</script><script>document.title = 'Canvas Kit Storybook';</script><style>[title^='_hidden_'] {
+  }
+
+  window.onerror = function onerror(message, source, line, column, err) {
+    if (window.CONFIG_TYPE !== 'DEVELOPMENT') return;
+    // eslint-disable-next-line no-var, vars-on-top
+    var xhr = new window.XMLHttpRequest();
+    xhr.open('POST', '/runtime-error');
+    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    xhr.send(
+      JSON.stringify({
+        /* eslint-disable object-shorthand */
+        message: message,
+        source: source,
+        line: line,
+        column: column,
+        error: err && { message: err.message, name: err.name, stack: err.stack },
+        origin: 'manager',
+        /* eslint-enable object-shorthand */
+      })
+    );
+  };</script><script>document.title = 'Canvas Kit Storybook';</script><style>[title^='_hidden_'] {
     display: none !important;
   }</style><style>#root[hidden],
       #docs-root[hidden] {
@@ -34,4 +54,4 @@
             
         
             
-              window['DOCS_MODE'] = false;</script><script src="runtime~main.870e8ee0658e83d05c6b.bundle.js"></script><script src="vendors~main.4c17af395ff336bf0bad.bundle.js"></script><script src="main.7ceaa074c8c2c063b979.bundle.js"></script></body></html>
+              window['DOCS_MODE'] = false;</script><script src="runtime~main.0d0f6ceeb647e02c1347.manager.bundle.js"></script><script src="vendors~main.31b133359c7b665955aa.manager.bundle.js"></script><script src="main.02753d857502a7ab3c09.manager.bundle.js"></script></body></html>
